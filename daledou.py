@@ -47,8 +47,8 @@ browser = webdriver.Chrome()
 browser.get('https://ui.ptlogin2.qq.com/cgi-bin/login?appid=614038002&style=9&s_url=https%3A%2F%2Fdld.qzapp.z.qq.com%2Fqpet%2Fcgi-bin%2Fphonepk%3Fcmd%3Dindex%26channel%3D0')
 pre_title = browser.title
 browser.maximize_window()
-browser.find_element_by_id('u').send_keys('631046883')
-browser.find_element_by_id('p').send_keys('wxq1920woziji.')
+browser.find_element_by_id('u').send_keys('自己的QQ')
+browser.find_element_by_id('p').send_keys('QQ密码')
 login = browser.find_element_by_id('go')
 login.click()
 time.sleep(1.5) #2s不响应
