@@ -47,8 +47,8 @@ browser = webdriver.Chrome()
 browser.get('https://ui.ptlogin2.qq.com/cgi-bin/login?appid=614038002&style=9&s_url=https%3A%2F%2Fdld.qzapp.z.qq.com%2Fqpet%2Fcgi-bin%2Fphonepk%3Fcmd%3Dindex%26channel%3D0')
 pre_title = browser.title
 browser.maximize_window()
-browser.find_element_by_id('u').send_keys('自己的QQ')
-browser.find_element_by_id('p').send_keys('QQ密码')
+browser.find_element_by_id('u').send_keys('631046883')
+browser.find_element_by_id('p').send_keys('wxq1920woziji.')
 login = browser.find_element_by_id('go')
 login.click()
 time.sleep(1.5) #2s不响应
@@ -230,6 +230,7 @@ browser.find_element_by_link_text("返回大乐斗首页").click()
 
 
 # 会武
+# 1-3试炼 4助威丐帮
 print('六门会武**********')
 browser.find_element_by_link_text("会武").click()#下周一研究
 if weekday >= 1 and weekday <= 3:
@@ -241,6 +242,11 @@ elif weekday == 5:
     print('六门会武进行中，请周末来领取奖励')
 else:
     browser.find_element_by_link_text("领奖").click()
+    try:
+        browser.find_element_by_link_text("领取").click()
+    except:
+        print(re.search(r'(贵门派.*?)<br />', browser.page_source).group(1))
+        print(re.search(r'(你助威的门派.*?)<br />', browser.page_source).group(1))
 browser.find_element_by_link_text("返回大乐斗首页").click()
 # try:
 #     browser.find_elements_by_link_text("挑战")[-1].click()#怎么做确保不用试炼书
@@ -310,6 +316,8 @@ else:
 browser.find_element_by_link_text("返回大乐斗首页").click()
 
 # 武林盟主
+# 报名时间：1、3、5 12:00-23:55
+# 竞猜时间：2、4、6 12:00-20:55
 print('武林盟主**********')
 browser.find_element_by_link_text("武林盟主").click()
 if weekday % 2 != 0 and weekday != 7:
@@ -332,7 +340,15 @@ elif weekday % 2 == 0:
 browser.find_element_by_link_text("返回大乐斗首页").click()
 
 # 全民乱斗
+# 每周一更新竞技
 print('全民乱斗**********')
+# 任务可能出现：
+# 挑战竞技场并获得三次胜利(0/3)
+# 战胜4个好友或帮友,级差<=10(0/4)
+# 报名武林大会(0/1)
+# 成功拦截他人镖车一次(0/1)
+# 抢占他人地盘三次(0/3)
+# 挑战竞技场并获得两次胜利(0/2)
 
 # # 任务派遣中心 *****
 # print('任务派遣中心**********')
@@ -390,6 +406,11 @@ print('全民乱斗**********')
 # 帮派黄金联赛
 print('帮派黄金联赛**********')
 browser.find_element_by_link_text("帮派黄金联赛").click()
+
+try:
+    browser.find_element_by_link_text("领取帮派赛季奖励").click()
+except:
+    print('没有奖励可领')
 try:
     browser.find_element_by_link_text("领取奖励").click()
     print(re.search(r'(恭喜您.*?)<br />', browser.page_source).group(1))
@@ -413,19 +434,35 @@ browser.find_element_by_link_text("攻击").click()
 browser.find_element_by_link_text("返回大乐斗首页").click()
 
 # 问鼎天下
+# 争夺时间：1.6-6.6
+# 助威时间：6、6:00-19:30
 print('问鼎天下**********')
 browser.find_element_by_link_text("问鼎天下").click()
-browser.find_element_by_link_text("领取奖励").click()
 if weekday >= 1 and weekday <= 5:
+    browser.find_element_by_link_text("资源点争夺").click()
+    browser.find_element_by_link_text("领取奖励").click()
     argue_times = r'剩余抢占次数：(\d+)'
     print('剩余抢占次数：', re.search(argue_times, browser.page_source).group(1))
     while int(re.search(argue_times, browser.page_source).group(1)) > 2:
         browser.find_element_by_link_text("攻占").click()
         print('剩余抢占次数：', re.search(argue_times, browser.page_source).group(1))
-
+if weekday == 6:
+    area_list = ['北寒', '南荒', '东海', '西泽']
+    shenge_exist = False
+    for i in area_list:
+        browser.find_element_by_link_text(i).click()
+        try:
+            browser.find_element_by_link_text("神ㄨ阁丶").click()
+            shenge_exist = True
+            break
+        except:
+            continue
+    if shenge_exist is False:
+        print('神阁帮不在区域赛16强，请重新助威')
 browser.find_element_by_link_text("返回大乐斗首页").click()
 
 # 梦想之旅
+#  第四周周5用梦幻机票，5/6/7/8同理，八周一循环
 print('梦想之旅**********')
 browser.find_element_by_link_text("梦想之旅").click()
 browser.find_element_by_link_text("普通旅行").click()
@@ -458,7 +495,7 @@ if int(re.search(r'本日免费剩余次数：(\d+)', browser.page_source).group
             break
 browser.find_element_by_link_text("返回大乐斗首页").click()
 
-# 群雄逐鹿（消耗挑战书）
+# 群雄逐鹿 周六报名 周一到周三14:00比赛，在此之前领奖励
 
 # 幻境（现阶段吃药试试）
 print('幻境(吃药)**********')
