@@ -44,7 +44,7 @@ def get_track(distance):
     return track
 
 browser = webdriver.Chrome()
-browser.get('https://ui.ptlogin2.qq.com/cgi-bin/login?appid=614038002&style=9&s_url=https%3A%2F%2Fdld.qzapp.z.qq.com%2Fqpet%2Fcgi-bin%2Fphonepk%3Fcmd%3Dindex%26channel%3D0')
+browser.get('http://dld.qzapp.z.qq.com')
 pre_title = browser.title
 browser.maximize_window()
 browser.find_element_by_id('u').send_keys('账号')
